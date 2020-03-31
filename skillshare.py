@@ -6,7 +6,7 @@ class Skillshare(object):
     def __init__(
         self,
         cookie,
-        download_path='/content/drive/My Drive/SkillShare',
+        download_path='/content/drive/My Drive/Skill Share Video',
         pk='BCpkADawqM2OOcM6njnM7hf9EaK6lIFlqiXB0iWjqGWUQjU7R8965xUvIQNqdQbnDTLz0IAO7E6Ir2rIbXJtFdzrGtitoee0n1XXRliD-RH9A-svuvNW9qgo3Bh34HEZjXjG4Nml4iyz3KqF',
         brightcove_account_id=3695997568001,
     ):
@@ -41,7 +41,7 @@ class Skillshare(object):
         title = data['title']
         if self.is_unicode_string(title):
             title = title.encode('ascii', 'replace')
-        base_path = os.path.abspath(os.path.join(self.download_path, slugify(teacher_name), slugify(title))).rstrip('/')
+        base_path = os.path.abspath(os.path.join(self.download_path, (slugify(teacher_name) + ' by ' + slugify(title)))).rstrip('/')
         if not os.path.exists(base_path):
             os.makedirs(base_path)
         for u in data['_embedded']['units']['_embedded']['units']:
