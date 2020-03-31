@@ -41,7 +41,13 @@ class Skillshare(object):
         title = data['title']
         if self.is_unicode_string(title):
             title = title.encode('ascii', 'replace')
-        base_path = os.path.abspath(os.path.join(self.download_path, (slugify(teacher_name) + ' by ' + slugify(title)))).rstrip('/')
+        clean_title = slugify(title)
+        
+        title_list = clean_title.split('-')
+        title_list_proper = [word.capitalize() for word in title_list]
+        final_title = ' '.join(title_list_proper)
+        
+        base_path = os.path.abspath(os.path.join(self.download_path, final_title)).rstrip('/')
         if not os.path.exists(base_path):
             os.makedirs(base_path)
         for u in data['_embedded']['units']['_embedded']['units']:
