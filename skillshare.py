@@ -22,6 +22,14 @@ class Skillshare(object):
 
         else:
             return False
+        
+    def clean_title(self, title):
+        title_list = title.split('-')
+        title_list_proper = [word.capitalize() for word in title_list]
+        final_title = ' '.join(title_list_proper)
+        
+        return final_title
+        
 
     def download_course_by_url(self, url):
         m = re.match('https://www.skillshare.com/classes/.*?/(\\d+)', url)
@@ -40,12 +48,9 @@ class Skillshare(object):
             teacher_name = teacher_name.encode('ascii', 'replace')
         title = data['title']
         if self.is_unicode_string(title):
-            title = title.encode('ascii', 'replace')
-        clean_title = slugify(title)
+            title = title.encode('ascii', 'replace')        
         
-        title_list = clean_title.split('-')
-        title_list_proper = [word.capitalize() for word in title_list]
-        final_title = ' '.join(title_list_proper)
+        final_title = clean_title(slugify(title))
         
         base_path = os.path.abspath(os.path.join(self.download_path, final_title)).rstrip('/')
         if not os.path.exists(base_path):
@@ -60,6 +65,7 @@ class Skillshare(object):
                     s_title = s['title']
                     if self.is_unicode_string(s_title):
                         s_title = s_title.encode('ascii', 'replace')
+                        s_title = clean_title(s_title)
                     file_name = '{} - {}'.format(str(s['index'] + 1).zfill(2), slugify(s_title))
                     self.download_video(fpath='{base_path}/{session}.mp4'.format(base_path=base_path,
                       session=file_name),
