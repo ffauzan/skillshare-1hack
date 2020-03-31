@@ -65,8 +65,8 @@ class Skillshare(object):
                     s_title = s['title']
                     if self.is_unicode_string(s_title):
                         s_title = s_title.encode('ascii', 'replace')
-                        s_title = self.clean_title(s_title)
-                    file_name = '{} - {}'.format(str(s['index'] + 1).zfill(2), slugify(s_title))
+                        s_title = self.clean_title(slugify(s_title))
+                    file_name = '{} - {}'.format(str(s['index'] + 1).zfill(2), s_title)
                     self.download_video(fpath='{base_path}/{session}.mp4'.format(base_path=base_path,
                       session=file_name),
                       video_id=video_id)
