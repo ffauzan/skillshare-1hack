@@ -50,7 +50,7 @@ class Skillshare(object):
         if self.is_unicode_string(title):
             title = title.encode('ascii', 'replace')        
         
-        final_title = clean_title(slugify(title))
+        final_title = self.clean_title(slugify(title))
         
         base_path = os.path.abspath(os.path.join(self.download_path, final_title)).rstrip('/')
         if not os.path.exists(base_path):
@@ -65,7 +65,7 @@ class Skillshare(object):
                     s_title = s['title']
                     if self.is_unicode_string(s_title):
                         s_title = s_title.encode('ascii', 'replace')
-                        s_title = clean_title(s_title)
+                        s_title = self.clean_title(s_title)
                     file_name = '{} - {}'.format(str(s['index'] + 1).zfill(2), slugify(s_title))
                     self.download_video(fpath='{base_path}/{session}.mp4'.format(base_path=base_path,
                       session=file_name),
